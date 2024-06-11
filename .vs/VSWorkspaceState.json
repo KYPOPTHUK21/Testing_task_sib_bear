@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\assets",
+    "\\config",
+    "\\controllers",
+    "\\models",
+    "\\views",
+    "\\views\\layouts",
+    "\\views\\map",
+    "\\views\\site"
+  ],
+  "SelectedNode": "\\views\\map\\map.php",
+  "PreviewInSolutionExplorer": false
+}

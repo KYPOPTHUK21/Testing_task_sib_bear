@@ -1,0 +1,143 @@
+html, body, #app {
+    width: 100%;
+    height: 100%;
+}
+
+:root {
+    --radius: 40px;
+}
+
+#app {
+    height: calc(100% - 30px);
+    float: left;
+    position: fixed;
+    left: 0;
+}
+
+.circle {
+    position: relative;
+
+    width: var(--radius, 20px);
+    height: var(--radius, 20px);
+
+    color: #8a64eb;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+
+    transform: translate(-50%, -50%);
+}
+
+.circle-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 70%;
+    height: 70%;
+
+    border-radius: 50%;
+    background-color: currentColor;
+
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.circle-text {
+    font-size: 0.9em;
+
+    color: #fff;
+}
+
+.pin {
+    transform: translate(-50%, -100%);
+}
+
+.checkselect {
+    position: relative;
+    display: inline-block;
+    min-width: 220px;
+    text-align: left;
+}
+.checkselect-control {
+    position: relative;
+    padding: 0 !important;
+}
+.checkselect-control select {
+    position: relative;
+    display: inline-block;
+    width: 86%;
+    margin: 0;
+    padding-left: 5px;
+    height: 50px;
+}
+.checkselect-over {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+.checkselect-popup {
+    display: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    border: 1px solid #dadada;
+    border-top: none;
+    background: #fff;
+    z-index: 9999;
+    overflow: auto;
+    user-select: none;
+}
+.checkselect label {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 4px 6px 4px 25px;
+    font-weight: normal;
+    font-size: 1em;
+    line-height: 1.1;
+    cursor: pointer;
+}
+.checkselect-popup input {
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    margin: 0 !important;
+    padding: 0;
+}
+.checkselect-popup label:hover {
+    background: #03a2ff;
+    color: #fff;
+}
+.checkselect-popup fieldset {
+    display: block;
+    margin:  0;
+    padding: 0;
+    border: none;
+}
+.checkselect-popup fieldset input {
+    left: 18px;
+}
+.checkselect-popup fieldset label {
+    padding-left: 32px;
+}
+.checkselect-popup legend {
+    display: block;
+    margin: 0;
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: 1em;
+    line-height: 1.1;
+}
