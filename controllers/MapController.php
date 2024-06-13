@@ -1,8 +1,9 @@
 <?php
 namespace app\controllers;
 
+use app\models\ContactForm;
 use app\models\Markers;
-
+use app\models\CreateMark;
 use Yii;
 use yii\web\Controller;
 
@@ -10,9 +11,39 @@ class MapController extends Controller
     {
         public function actionCreatemark()
         {
-            $session = Yii::$app->session;
-            $session->open();
-            return $this->render('createmark', compact('session'));
+            //$session = Yii::$app->session;
+            //$session->open();
+
+            $model = new CreateMark();
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            //if ($model->load(Yii::$app->request->post())) {
+                /*$model->name = $name;
+                $model->coordsx = $coordsx;
+                $model->coordsy = $coordsy;
+                $model->region = $region;
+                $model->post = $post;
+                $model->save();*/
+                /*$model->name;
+                $model->coordsx;
+                $model->coordsy;
+                $model->region;
+                $model->post;*/
+                $Markers = new Markers();
+                $name = $model->name;
+                $coordsy = $model->coordsy;
+                $coordsx = $model->coordsx;
+                $region = $model->region;
+                $post = $model->post;
+                $Markers->name = $name;
+                $Markers->coordsx = $coordsx;
+                $Markers->coordsy = $coordsy;
+                $Markers->region = $region;
+                $Markers->post = $post;
+                $Markers->save();
+                return $this->render('success', ['model' => $model]);
+            }
+            return $this->render('createmark1', compact('model'));
+            //return $this->render('createmark1', ['model' => $model]);
         }
         public function actionMap()
             {
@@ -22,8 +53,6 @@ class MapController extends Controller
             }
             public function actionCreate()  //создание записей
             {
-                $max = 70.6634522;
-                $min = 40.6622345;
                 $bounds = [
                     [55.24743610796297,35.90992654894065],
                     [56.274124335714916,39.359633580190646]
@@ -55,7 +84,7 @@ class MapController extends Controller
                     $Markers->post = $post;
                     $Markers->save();
                     //echo $i;
-                    // return $this->render('create');
+                    return $this->render('create');
                 }
 
                 echo $i;

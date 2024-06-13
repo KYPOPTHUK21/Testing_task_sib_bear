@@ -1,7 +1,7 @@
 let arrSave = new Array();
 //console.log(ArrMarkers);
 //ArrMarkers.splice(1,1);
-console.log(ArrMarkers[1]);
+//console.log(ArrMarkers[1]);
 let arrTest = new Array();
 arrTest = arrTest.concat(ArrMarkers[1]);
 //console.log(arrTest);
@@ -11,7 +11,7 @@ let ids = new Array();
 let CoordsInput = new Array();
 //ids[0] = null;
 let coordsFinal = new Array();
-let ArrMarkers2 = new Array();
+let objFilters = new Object();
 //arrSave = ArrMarkers;
 //console.log(arrSave);
 //let filterarr = ArrMarkers.filter(post => post.post === 'Agent');
@@ -26,17 +26,17 @@ function getAllMarkers(d)
             ids.push(k);
 
             //coords['id'].push(ArrMarkers[k]['id']);
-           // coords.id = ArrMarkers[k]['id'];
-        //console.log(ArrMarkers[k]['region']);
-        //ids.push(arrSave[k]['id']);
+            // coords.id = ArrMarkers[k]['id'];
+            //console.log(ArrMarkers[k]['region']);
+            //ids.push(arrSave[k]['id']);
             //arrSave.splice(k,1)
             //console.log(arrSave);
-           // arrSave = arrSave.concat(ArrMarkers[k])
+            // arrSave = arrSave.concat(ArrMarkers[k])
         }
         //console.log(ids);
         k++;
     }
-   // console.log(arrSave);
+    // console.log(arrSave);
     return arrSave;
 }
 
@@ -115,8 +115,8 @@ async function main() {
     map = new YMap(document.getElementById('app'), {location: LOCATION, showScaleInCopyrights: true});
     map
         .addChild(new YMapDefaultSchemeLayer())
-        .addChild(new YMapFeatureDataSource({id: 'clusterer-source'}));
-       // .addChild(new YMapLayer({source: 'clusterer-source', type: 'markers', zIndex: 1800}));
+        .addChild(new YMapFeatureDataSource({id: 'clusterer-source'}))
+        .addChild(new YMapLayer({source: 'clusterer-source', type: 'markers', zIndex: 1800}));
 
     const controls = new YMapControls({position: 'bottom left'});
     const {YMapOpenMapsButton} = await ymaps3.import('@yandex/ymaps3-controls-extra');
@@ -135,7 +135,7 @@ async function main() {
             },
             contentPin.cloneNode(true)
         );
-   // alert( document.documentElement.YMap);
+    // alert( document.documentElement.YMap);
 
     /*function getUpdateElement(CoordsInput)
     {
@@ -167,12 +167,12 @@ async function main() {
     `;
         return circle;
     }
-        //coordsFinal = coordsFinal.concat(coordsA);
-        //let tets = coordsA;
+    //coordsFinal = coordsFinal.concat(coordsA);
+    //let tets = coordsA;
 
-        //console.log(coordsTest);
-        //console.log(ArrMarkers)
-        const getPoints = (i) => [
+    //console.log(coordsTest);
+    //console.log(ArrMarkers)
+    const getPoints = (i) => [
         ArrMarkers[i]['coordsx'],
         ArrMarkers[i]['coordsy']
     ];
@@ -182,28 +182,28 @@ async function main() {
         coordsFinal[b]['coordsy']
     ];
 
-        const points = ArrMarkers.map((lnglat, i) => ({
-            type: 'Feature',
-            id: i,
-            geometry: {coordinates: getPoints(i)},
-            properties: {post: ArrMarkers[i]['post'], region: ArrMarkers[i]['region']}
-        }));
+    const points = ArrMarkers.map((lnglat, i) => ({
+        type: 'Feature',
+        id: i,
+        geometry: {coordinates: getPoints(i)},
+        properties: {post: ArrMarkers[i]['post'], region: ArrMarkers[i]['region']}
+    }));
     //ArrMarkers2 = coordsN;
 
-        function getPoints2(coordsFinal)
-        {
-            const points2 = coordsFinal.map((lnglat, b) => ({
-                type: 'Feature',
-                id: b,
-                geometry: {coordinates: getCoords(coordsFinal, b)},
-                properties: {post: coordsFinal[b]['post'], region: coordsFinal[b]['region']}
-            }));
-            return points2;
-        }
-       // console.log(marker);
-       // console.log(points);
+    function getPoints2(coordsFinal)
+    {
+        const points2 = coordsFinal.map((lnglat, b) => ({
+            type: 'Feature',
+            id: b,
+            geometry: {coordinates: getCoords(coordsFinal, b)},
+            properties: {post: coordsFinal[b]['post'], region: coordsFinal[b]['region']}
+        }));
+        return points2;
+    }
+    // console.log(marker);
+    // console.log(points);
 
-       // console.log(i);
+    // console.log(i);
     const clusterer = new YMapClusterer({
         method: clusterByGrid({gridSize: 128}),
         //features: getRandomPoints(100, BOUNDS),
@@ -212,57 +212,96 @@ async function main() {
         marker,
         cluster
     });
-    const l1 = new YMapLayer({source: 'clusterer-source', type: 'markers', zIndex: 1800});
-    map.addChild(l1);
+    //const l1 = new YMapLayer({source: 'clusterer-source', type: 'markers', zIndex: 1800});
+    //map.addChild(l1);
     map.addChild(clusterer);
     console.log(clusterer);
     //map.removeChild(clusterer[2]);
-   // const l2 = new YMapLayer({source: 'clusterer-source', type: 'markers', zIndex: 1800});
-  //  map.addChild(l2);
+    // const l2 = new YMapLayer({source: 'clusterer-source', type: 'markers', zIndex: 1800});
+    //  map.addChild(l2);
     //coords = [];
     //coords = getAllMarkers('North');
     //map.addChild(clusterer);
     //map.removeChild(l2);
     function getUpdateElementOnDetuch()
-       {
-            console.log(coordsE);
-            coordsFinal = [];
-            var checkboxE= document.getElementById('Engineer');
-            var checkboxA= document.getElementById('Agent');
-            var checkboxI= document.getElementById('Installer');
-            var checkboxS= document.getElementById('South');
-            var checkboxN= document.getElementById('North');
-            console.log(checkboxE.checked); console.log(checkboxA.checked); console.log(checkboxI.checked); console.log(checkboxS.checked); console.log(checkboxN.checked);
-            console.log(coordsFinal);
-            coordsFinal = coordsFinal.filter(Boolean);
-            if (checkboxE.checked === true)
-                coordsFinal = coordsFinal.concat(coordsE);
-            if (checkboxA.checked === true)
-                coordsFinal = coordsFinal.concat(coordsA);
-            if (checkboxI.checked === true)
-                coordsFinal = coordsFinal.concat(coordsI);
-            if (checkboxS.checked === true)
-                coordsFinal = coordsFinal.concat(coordsS);
-            if (checkboxN.checked === true)
-                coordsFinal = coordsFinal.concat(coordsN);
-            // switch (true)
-            // {
-            //     case (checkboxE.checked):coordsFinal = coordsFinal.concat(coordsE);
-            //     break;
-            //     case (checkboxA.checked):coordsFinal = coordsFinal.concat(coordsA);
-            //     break;
-            //     case (checkboxI.checked):coordsFinal = coordsFinal.concat(coordsI);
-            //     break;
-            //     case (checkboxS.checked):coordsFinal = coordsFinal.concat(coordsS);
-            //     break;
-            //     case (checkboxN.checked):coordsFinal = coordsFinal.concat(coordsN);
-            //     break;
-            // }
-            coordsFinal = coordsFinal.filter((item, index) => {return coordsFinal.indexOf(item) === index});
-            coordsFinal = coordsFinal.filter(Boolean);
-            console.log(coordsFinal);
-            clusterer.update({features: getPoints2(coordsFinal)});
+    {
+        // console.log(coordsE);
+        coordsFinal = [];
+        var checkboxE= document.getElementById('Engineer');
+        var checkboxA= document.getElementById('Agent');
+        var checkboxI= document.getElementById('Installer');
+        var checkboxS= document.getElementById('South');
+        var checkboxN= document.getElementById('North');
+        //console.log(checkboxE.checked); console.log(checkboxA.checked); console.log(checkboxI.checked); console.log(checkboxS.checked); console.log(checkboxN.checked);
+        //console.log(coordsFinal);
+        let filterPost = [];
+        let filterReg = [];
+        objFilters = {};
+        let filters = [];
+
+        if (checkboxE.checked === true)
+        {
+            coordsFinal = coordsFinal.concat(coordsE);
+            objFilters =
+                {
+                    type: "post",
+                    name: "Engineer"
+                }
+            //filterPost.push(objFilters);
+            filters.push(objFilters);
         }
+        if (checkboxA.checked === true)
+        {
+            coordsFinal = coordsFinal.concat(coordsA);
+            objFilters =
+                {
+                    type: "post",
+                    name: "Agent"
+                }
+            //filterPost.push(objFilters);
+            filters.push(objFilters);
+
+        }
+        if (checkboxI.checked === true)
+        {
+            coordsFinal = coordsFinal.concat(coordsI);
+            objFilters =
+                {
+                    type: "post",
+                    name: "Installer"
+                }
+            //filterPost.push(objFilters);
+            filters.push(objFilters);
+        }
+        if (checkboxS.checked === true)
+        {
+            coordsFinal = coordsFinal.concat(coordsS);
+            objFilters =
+                {
+                    type: "region",
+                    name: "South"
+                }
+            //filterReg.push(objFilters);
+            filters.push(objFilters);
+            //console.log(filters);
+        }
+        if (checkboxN.checked === true)
+        {
+            coordsFinal = coordsFinal.concat(coordsN);
+            objFilters =
+                {
+                    type: "region",
+                    name: "North"
+                }
+            //filterReg.push(objFilters);
+            filters.push(objFilters);
+        }
+        coordsFinal = coordsFinal.filter(filterMark => filters.some(filter => filterMark[filter.type] === filter.name));
+        coordsFinal = coordsFinal.filter(Boolean);
+        coordsFinal = coordsFinal.filter((item, index) => {return coordsFinal.indexOf(item) === index});
+        console.log(coordsFinal);
+        clusterer.update({features: getPoints2(coordsFinal)});
+    }
     function changedPoints() {
         clusterer.update({features: getRandomPoints(pointsCount.value || rndNum(), map.bounds)});
     }
@@ -273,7 +312,7 @@ async function main() {
         document.getElementById("Installer").checked = false;
         document.getElementById("Engineer").checked = false;
         document.getElementById("Agent").checked = false;
-       // $('.checkselect').checkselect();
+        // $('.checkselect').checkselect();
     }
 
     function toggleClusterer() {
@@ -286,95 +325,23 @@ async function main() {
 
     function checkNorth()
     {
-        // var checkbox= document.getElementById('North');
-        // if(checkbox.checked == true)
-        // {
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = coordsN;
-        //     //console.log(CoordsInput);
-             getUpdateElementOnDetuch()
-        // } else
-        // {
-        //     //return false;
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = ArrMarkers;
-        //     //console.log('detach');
-        //     getUpdateElementOnDetuch();
-        // }
+        getUpdateElementOnDetuch()
     }
     function checkSouth()
     {
-        // var checkbox= document.getElementById('South');
-        // if(checkbox.checked == true)
-        // {
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = coordsS;
-        //     //console.log(CoordsInput);
-             getUpdateElementOnDetuch()
-        // } else
-        // {
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = ArrMarkers;
-        //     getUpdateElementOnDetuch();
-        // }
+        getUpdateElementOnDetuch()
     }
     function checkAgent()
     {
-        //var checkbox= document.getElementById('Agent');
-        //if(checkbox.checked == true)
-        //{
-          //  b = 0;
-          //  CoordsInput = [];
-            //CoordsInput = coordsA;
-            //console.log(CoordsInput);
-            getUpdateElementOnDetuch()
-       // } else
-       // {
-          //  b = 0;
-           // CoordsInput = [];
-            //CoordsInput = ArrMarkers;
-          //  getUpdateElementOnDetuch();
-       // }
+        getUpdateElementOnDetuch()
     }
     function checkEngineer()
     {
-        // var checkbox= document.getElementById('Engineer');
-        // if(checkbox.checked == true)
-        // {
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = coordsE;
-        //     //console.log(CoordsInput);
-                getUpdateElementOnDetuch()
-        // } else
-        // {
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = ArrMarkers;
-        //     getUpdateElementOnDetuch();
-        // }
+        getUpdateElementOnDetuch()
     }
     function checkInstaller()
     {
-        // var checkbox= document.getElementById('Installer');
-        // if(checkbox.checked == true)
-        // {
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = coordsI;
-        //     //console.log(CoordsInput);
-             getUpdateElementOnDetuch()
-        // } else
-        // {
-        //     b = 0;
-        //     CoordsInput = [];
-        //     //CoordsInput = ArrMarkers;
-        //     getUpdateElementOnDetuch();
-        // }
+        getUpdateElementOnDetuch()
     }
 
     changePoints.onclick = changedPoints;
@@ -429,11 +396,11 @@ async function main() {
         console.log(mapListener);
     }
 
-  /*  const updateHandler = ({type, camera, location}) => {
-        console.log(type, camera.tilt);
+    /*  const updateHandler = ({type, camera, location}) => {
+          console.log(type, camera.tilt);
 
-        console.log(location.zoom, location.center);
-    };*/
+          console.log(location.zoom, location.center);
+      };*/
 
     const mapListener = new YMapListener({
         layer: 'any',
@@ -444,7 +411,7 @@ async function main() {
     map.addChild(mapListener);
     map.addChild(
         new YMapControls({position: 'left'})
-                .addChild(new YMapGeolocationControl({}))
+            .addChild(new YMapGeolocationControl({}))
     );
     map.addChild(
         new YMapControls({position: 'right'})
@@ -503,3 +470,4 @@ async function main() {
 })(jQuery);
 
 $('.checkselect').checkselect();
+
