@@ -130,7 +130,7 @@ async function main() {
             {
                 coordinates: feature.geometry.coordinates,
                 source: 'clusterer-source',
-                color: '#006efc',
+                //color: '#006efc',
                 popup: {content: `Region: ${feature.properties.region}, Post: ${feature.properties.post}`, position: 'left'}
             },
             contentPin.cloneNode(true)
