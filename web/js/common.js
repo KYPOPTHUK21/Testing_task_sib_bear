@@ -234,11 +234,13 @@ async function main() {
         var checkboxN= document.getElementById('North');
         //console.log(checkboxE.checked); console.log(checkboxA.checked); console.log(checkboxI.checked); console.log(checkboxS.checked); console.log(checkboxN.checked);
         //console.log(coordsFinal);
-        let filterPost = [];
+        let filterPost = 0;
+        let filterRegIndex = 0;
         let filterReg = [];
         objFilters = {};
         let filters = [];
-
+        //coordsFinal = coordsFinal.concat(coordsS);
+        //coordsFinal = coordsFinal.concat(coordsN);
         if (checkboxE.checked === true)
         {
             coordsFinal = coordsFinal.concat(coordsE);
@@ -247,6 +249,7 @@ async function main() {
                     type: "post",
                     name: "Engineer"
                 }
+            filterPost = 1;
             //filterPost.push(objFilters);
             filters.push(objFilters);
         }
@@ -258,6 +261,7 @@ async function main() {
                     type: "post",
                     name: "Agent"
                 }
+            filterPost = 1;
             //filterPost.push(objFilters);
             filters.push(objFilters);
 
@@ -270,33 +274,65 @@ async function main() {
                     type: "post",
                     name: "Installer"
                 }
+            filterPost = 1;
             //filterPost.push(objFilters);
             filters.push(objFilters);
         }
         if (checkboxS.checked === true)
         {
             coordsFinal = coordsFinal.concat(coordsS);
-            objFilters =
-                {
-                    type: "region",
-                    name: "South"
-                }
-            //filterReg.push(objFilters);
-            filters.push(objFilters);
+            filterRegIndex = 1;
+            //filters.push(objFilters);
             //console.log(filters);
         }
         if (checkboxN.checked === true)
         {
             coordsFinal = coordsFinal.concat(coordsN);
-            objFilters =
-                {
-                    type: "region",
-                    name: "North"
-                }
+            filterRegIndex = 1;
             //filterReg.push(objFilters);
-            filters.push(objFilters);
+            //filters.push(objFilters);
         }
-        coordsFinal = coordsFinal.filter(filterMark => filters.some(filter => filterMark[filter.type] === filter.name));
+        if (filterPost === 1)
+        {
+            coordsFinal = coordsFinal.filter(filterMark => filters.some(filter => filterMark[filter.type] === filter.name));
+            //console.log(coordsFinal);
+        }
+        /*else
+        {
+            if (checkboxN.checked === true)
+            {
+                coordsFinal = coordsFinal.concat(coordsN);
+            }
+            if (checkboxS.checked === true)
+            {
+                coordsFinal = coordsFinal.concat(coordsS);
+            }
+        }*/
+
+        //console.log(coordsFinal);
+        if (filterRegIndex === 1)
+        {
+            if (checkboxS.checked === true)
+                {
+                    objFilters =
+                        {
+                            type: "region",
+                            name: "South"
+                        }
+                    filterReg.push(objFilters);
+                }
+                if (checkboxN.checked === true)
+                {
+                    objFilters =
+                        {
+                            type: "region",
+                            name: "North"
+                        }
+                }
+                filterReg.push(objFilters);
+                coordsFinal = coordsFinal.filter(filterMark => filterReg.some(filter => filterMark[filter.type] === filter.name));
+        }
+
         coordsFinal = coordsFinal.filter(Boolean);
         coordsFinal = coordsFinal.filter((item, index) => {return coordsFinal.indexOf(item) === index});
         console.log(coordsFinal);
